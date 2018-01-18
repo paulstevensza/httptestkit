@@ -1,4 +1,4 @@
-webinspect
+httptestkit
 ##########
 
 Connects to a web target as many times as required as quickly as required. Has options to show:
@@ -14,7 +14,7 @@ To install this software:
 
 .. code-block:: bash
 
-  $ pip install webinspect
+  $ pip install httptestkit
 
 Python Version
 ==============
@@ -26,9 +26,9 @@ Usage
 
 .. code-block:: bash
 
-  $ webinspect www.domain.tld --loop --sleep 0 --limit 5 --headers --dnsinfo --ipinfo
+  $ httptestkit www.domain.tld --loop --sleep 0 --limit 5 --headers --dnsinfo --ipinfo
 
 License
 =======
 
-Licensed under the MIT license. See LICENSE.txt for details.
+Licensed under the MIT license. See LICENSE for details.
