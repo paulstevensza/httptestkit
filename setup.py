@@ -50,6 +50,7 @@ setup(
     name='httptestkit',
     version=httptestkit.__version__,
     description='Test and gather info on a web site.',
+    long_description=long_description(),
     author=httptestkit.__author__,
     author_email='no-reply@xnode.co.za',
     license=httptestkit.__license__,

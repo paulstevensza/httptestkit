@@ -12,12 +12,13 @@ v0.1.3 (unreleased)
 Added:
 ******
 
-* None
+* Plugin support to allow the easy addition of new features in a modular fashion.
 
 Changed:
 ********
 
-* None
+* Final sweep of all code to find every stupid webinspect name.
+* Add long_description to setup.py.
 
 Removed:
 ********
