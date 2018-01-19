@@ -26,7 +26,10 @@ Changed:
 Removed:
 ********
 
-* None
+* DNS lookups from inspector.
+* IPInfo lookups from inspector.
+* Header lookups from inspector.
+* Helper methods from inspector.
 
 v0.1.2
 ======
