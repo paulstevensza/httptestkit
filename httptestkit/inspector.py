@@ -9,6 +9,8 @@ import dns.resolver
 import requests
 import tldextract
 
+from httptestkit.plugins import dnskit, headers, ipinfo
+
 class Inspector(object):
 
     def __init__(self, uri, sleep=None, limit=None, asyncr=False, headers=False, dnsinfo=False, ipinfo=False):
@@ -88,98 +90,15 @@ class Inspector(object):
 
                 # Show headers if the option has been set
                 if self.headers:
-                    self.get_headers()
+                    headers.Headers(self.uri).lookup()
 
                 # Show DNS info if the option has been set
                 if self.dnsinfo:
-                    self.get_dnsinfo()
+                    dnskit.DNS(self.uri).lookup()
 
                 # Show IP info if the option has been set
                 if self.ipinfo:
-                    self.get_ipinfo()
+                    ipinfo.IPInfo(self.uri).lookup()
 
                 print("")
                 sys.exit(0)
-
-    def get_headers(self):
-        req = requests.get(self.uri)
-        print("Request headers:")
-        print("================")
-        for k, v in req.headers.items():
-            print("{0:<30}{1}".format(k, v))
-        print("\n")
-
-    def _split_hostname(self):
-        parsed = urlsplit(self.uri)
-        return parsed.netloc
-
-    def _split_domain(self):
-        ext = tldextract.extract(self.uri)
-        domain = "{0}.{1}".format(ext.domain, ext.suffix)
-        return domain
-
-    def get_dnsinfo(self):
-        # For NS and SOA queries
-        # ext = tldextract.extract(self.uri)
-        # domain = "{0}.{1}".format(ext.domain, ext.suffix)
-        domain = self._split_domain()
-
-        # For "other"
-        # parsed = urlsplit(self.uri)
-        # host = parsed.netloc
-        host = self._split_hostname()
-
-        resolver = dns.resolver.Resolver(configure=False)
-        resolver.nameservers = ['8.8.8.8']
-        ns = dns.resolver.query(domain, 'NS')
-        ar = dns.resolver.query(host, 'A')
-
-        line = "Nameservers for {0} are:".format(domain)
-        print(line)
-        print("=" * len(line))
-        for rr in ns:
-            print(rr.target)
-
-        try:
-            cn = dns.resolver.query(host, 'CNAME')
-            rdt = dns.rdatatype.to_text(cn.rdtype)
-            print("\n{0} is a {1} record.".format(host, rdt))
-        except dns.resolver.NoAnswer:
-            pass
-
-        line = "\nThe host {0} resolves to:".format(host)
-        print(line)
-        print("=" * len(line))
-        for rr in ar:
-            rdt = dns.rdatatype.to_text(ar.rdtype)
-            req = '.'.join(reversed(str(rr).split("."))) + ".in-addr.arpa"
-            ptr = dns.resolver.query(req, 'PTR')
-            for ra in ptr:
-                rev = ra
-            print("[{0}] {1} ({2})".format(rdt, rr, rev))
-
-    def get_ipinfo(self):
-        # Resolve A records
-        host = self._split_hostname()
-        rec = dns.resolver.query(host, 'A')
-
-        line = "\nIP info for {0}:".format(host)
-        print(line)
-        print("=" * len(line))
-        headers = {'Accept': 'application/json'}
-        for rr in rec:
-            req = requests.get("https://ipinfo.io/{0}".format(rr), headers=headers)
-            res = req.json()
-            for k, v in res.items():
-                if len(k) == 2:
-                    fmt = str(k).upper()
-                else:
-                    fmt = str(k).capitalize()
-
-                print("{0:<20}: {1}".format(fmt, v))
-            (lat, lon) = res['loc'].split(",")
-            maps_url = "https://www.google.com/maps/search/?api=1&query={0},{1}".format(lat, lon)
-            print("{0:<20}: {1}".format("Google Maps", maps_url))
-
-    def get_security(self):
-        pass

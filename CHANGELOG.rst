@@ -19,6 +19,9 @@ Changed:
 
 * Final sweep of all code to find every stupid webinspect name.
 * Add long_description to setup.py.
+* Rewrite dns lookup as a plugin.
+* Rewrite ipinfo lookup as a plugin.
+* Rewrite headers lookup as a plugin.
 
 Removed:
 ********
