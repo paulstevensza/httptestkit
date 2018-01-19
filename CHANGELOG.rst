@@ -6,8 +6,8 @@ This document records all notable changes to httptestkit.
 
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-v0.1.3 (unreleased)
-===================
+v0.1.3
+======
 
 Added:
 ******
