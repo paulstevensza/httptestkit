@@ -12,7 +12,8 @@ v0.2.0 (Unreleased)
 Added:
 ******
 
-* None
+* Add CloudFlare plugin to check that server is using CloudFlare properly.
+* Add Cert plugin to check site's TLS certificate.
 
 Changed:
 ********
@@ -22,7 +23,7 @@ Changed:
 Removed:
 ********
 
-* None
+* Unnecessary imports from inspector.
 
 v0.1.3
 ======

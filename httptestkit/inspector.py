@@ -2,14 +2,10 @@ import time
 import socket
 import statistics
 import sys
-from urllib.parse import quote_plus, urlsplit
-
-import dns.resolver
 
 import requests
-import tldextract
 
-from httptestkit.plugins import dnskit, headers, ipinfo
+from httptestkit.plugins import cert, cloudflare, dnskit, headers, ipinfo
 
 class Inspector(object):
 
